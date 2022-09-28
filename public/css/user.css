@@ -1,0 +1,15 @@
+.button-link {
+  background: none !important;
+  border: none;
+  padding: 12px 16px;
+  /*optional*/
+  font-family: inherit;
+  width: 100%;
+  text-align: left;
+  /*input has OS specific font-family*/
+  cursor: pointer;
+}
+
+.dropdown-content form:hover {
+  background-color: #ddd !important;
+}

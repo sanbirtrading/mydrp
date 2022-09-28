@@ -1,0 +1,22 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/css/admin-server-styles.css">
+<link rel="stylesheet" href="/css/top-bar-style.css">
+</head>
+<body>
+    <%- include('./includes/menu.ejs') %>
+    <%- include('./includes/is-manager.ejs') %>
+
+    <div class="main-content overflow-visible">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="py-2"></div>
+                <%- include('./includes/requests-table.ejs') %>
+            </div>
+        </div>
+    
+    </div>
+    <%- include('./includes/scripts.ejs') %>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/top-bar.js"></script>
+</body>
+<%- include('./includes/end.ejs') %>

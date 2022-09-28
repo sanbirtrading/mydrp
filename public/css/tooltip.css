@@ -1,0 +1,10 @@
+.tooltip {
+  display: flex;
+  /* flex-direction: row !important;
+  justify-content: center;
+
+  @media (min-width: 10rem) {
+    flex-direction: row !important;
+    justify-content: center;
+  } */
+}

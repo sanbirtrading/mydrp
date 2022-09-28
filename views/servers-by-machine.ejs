@@ -1,0 +1,98 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/css/admin-server-styles.css">
+<link rel="stylesheet" href="/css/top-bar-style.css">
+</head>
+<body>
+    <%- include('./includes/menu.ejs') %>
+    <%- include('./includes/is-manager.ejs') %>
+    <div class="main-content overflow-visible">
+        <div class="page-content">
+            <div class="container-fluid">
+                 <%#- include('./includes/tooltips.ejs') %>
+                 <table class="table table-striped mb-3">
+                    <thead style="background-color: black; color: white">
+                      <tr>
+                        <th>ID</th>
+                        <th>IP</th>
+                        <th>Port</th>
+                        <th>User</th>
+                        <th>
+                          Password
+                          <input
+                            class="form-check-input"
+                            id="password-checkbox"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </th>
+                        <th>ST</th>
+                        <th>RAM</th>
+                        <th>Hard Disk</th>
+                        <th>CPU</th>
+                        <th>Comment</th>
+                        <% if (currentUser.is_admin) { %>
+                        <th></th>
+                        <% };%>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="machine-row">
+                        <th scope="row" class="id align-middle"><%= machine.id %></th>
+                        <td class="ip align-middle">
+                          <a href="machine/<%= machine.id %>/servers"><%= machine.ip %></a>
+                        </td>
+                        <td class="port align-middle"><%= machine.port %></td>
+                        <td class="user align-middle">
+                          <%= machine['User.first_name'] %> <%= machine['User.last_name'] %>
+                        </td>
+                        <td class="password-tr align-middle">
+                          <span class="password-row blur"><%= machine.password %></span>
+                        </td>
+                        <td class="status align-middle">
+                          <% if(machine.status){ %>
+                          <i class="mdi mdi-checkbox-blank text-success"></i>
+                          <% } else{ %>
+                          <i class="mdi mdi-checkbox-blank text-danger"></i>
+                          <% } %>
+                        </td>
+                        <td class="ram align-middle"><%= machine.ram %></td>
+                        <td class="hard-disk align-middle"><%= machine.hard_disk %></td>
+                        <td class="cpu align-middle"><%= machine.cpu %></td>
+                        <td class="comment align-middle"><%= machine.comment %></td>
+                        <% if (currentUser.is_admin) { %>
+                        <td class="d-flex">
+                          <button
+                            class="btn btn-primary waves-effect waves-light mx-2"
+                            data-bs-target=".bs-example-modal-lg-machine-edit-details"
+                            data-bs-toggle="modal"
+                            href="#machine-edit-modal"
+                          >
+                            Edit
+                          </button>
+                          <form
+                            action="/machine/delete/<%= machine.id %>"
+                            id="machine"
+                            method="POST"
+                          >
+                            <button
+                              class="btn btn-danger waves-effect waves-light"
+                              type="submit"
+                            >
+                              Remove
+                            </button>
+                          </form>
+                          <% };%>
+                        </td>
+                      </tr>
+                    </tbody>
+                <div class="py-2"></div>
+                <%- include('./includes/server-table.ejs') %>
+            </div>
+        </div>
+    
+    </div>
+    <%- include('./includes/scripts.ejs') %>
+    <script type="text/javascript" src="/js/top-bar.js"></script>
+</body>
+<%- include('./includes/end.ejs') %>

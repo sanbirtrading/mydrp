@@ -1,0 +1,296 @@
+<%- include('./messages.ejs') %>
+<div class="row justify-content-center">
+  <div class="col-lg-12">
+    <div class="table-responsive overflow-hidden">
+      <h1>Server List</h1>
+      <table class="table table-striped mb-0">
+        <thead style="background-color: black; color: white">
+          <tr>
+            <th>ID</th>
+            <th>IP</th>
+            <th>Port</th>
+            <th>User</th>
+            <th>
+              Password
+              <input
+                class="form-check-input"
+                id="password-checkbox"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              />
+            </th>
+            <th>ST</th>
+            <th>RAM</th>
+            <th>Hard Disk</th>
+            <th>CPU</th>
+            <th>
+              Admin Password
+              <input
+                class="form-check-input"
+                id="password-checkbox-admin"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              />
+            </th>
+            <th>Unique ID</th>
+            <% if (currentUser.is_admin) { %>
+            <th></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% servers.forEach(server => { %>
+          <tr class="server-row">
+            <th scope="row" class="id align-middle"><%= server.id %></th>
+            <td class="ip align-middle"><%= server.ip %></td>
+            <td class="port align-middle"><%= server.port %></td>
+            <td class="user align-middle">
+              <%= server['User.first_name'] %> <%= server['User.last_name'] %>
+            </td>
+            <td class="password-tr align-middle">
+              <span class="password-row blur"><%= server.password %></span>
+            </td>
+            <td class="status align-middle">
+              <% if(server.status){ %>
+              <i class="mdi mdi-checkbox-blank text-success"></i>
+              <% } else{ %>
+              <i class="mdi mdi-checkbox-blank text-danger"></i>
+              <% } %>
+            </td>
+            <td class="ram align-middle"><%= server.ram %></td>
+            <td class="hard-disk align-middle"><%= server.hard_disk %></td>
+            <td class="cpu align-middle"><%= server.cpu %></td>
+            <td class="admin-password align-middle">
+              <span class="password-row-admin blur"
+                ><%= server.admin_password %></span>
+            </td>
+            <td class="unique-id align-middle"><%= server.unique_id %></td>
+
+            <% if (currentUser.is_admin) { %>
+            <td class="d-flex">
+              <button
+                class="btn btn-primary waves-effect waves-light mx-2"
+                data-bs-target=".bs-example-modal-lg-server-edit-details"
+                data-bs-toggle="modal"
+                href="#server-edit-modal"
+                type="submit"
+                style="position: relative; z-index: 99"
+              >
+                Edit
+              </button>
+              <form
+                action="/server/delete/<%= server.id %>"
+                id="server"
+                method="POST"
+              >
+                <button
+                  class="btn btn-danger waves-effect waves-light"
+                  type="submit"
+                >
+                  Remove
+                </button>
+              </form>
+            </td>
+            <% } %>
+          </tr>
+          <% });%>
+        </tbody>
+      </table>
+
+      <div
+        id="#server-edit-modal"
+        class="modal fade bs-example-modal-lg-server-edit-details"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <%- include('./modal-title.ejs') %> <strong>Edit Server</strong> <%-
+        include('./modal-body.ejs') %>
+        <div class="server-edit" id="server-edit"></div>
+        <%- include('./modal-end.ejs') %>
+
+         <!-- Modal content for the above example
+        <div
+          id="server-details-modal"
+          class="modal fade bs-example-modal-lg-server-details"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+        > -->
+          <%#- include('./modal-title.ejs') %>
+          <!-- <strong>Server Details</strong> <#%- include('./modal-body.ejs') %> -->
+          <!-- <div class="server-details" id="server-details"></div> -->
+          <%#- include('./modal-end.ejs') %> <% if (currentUser.is_admin) { %>
+          <%-include('./modal-button-start.ejs')
+          %>data-bs-target=".bs-example-modal-lg-server"<%-
+          include('./modal-button-class.ejs') %> Add Server %> <%-
+          include('./modal-button-end.ejs') %> <%} else { %>
+          <form
+            action="/request/server/<%= currentUser.id %>"
+            id="request-server"
+            method="POST"
+          >
+            <button
+              class="btn btn-primary waves-effect waves-light"
+              name="action"
+              formaction="/request/server/<%= currentUser.id %>"
+              value="request-server"
+              type="submit"
+            >
+              Request Server
+            </button>
+          </form>
+          <% } %>
+          <!--  Modal content for the above example -->
+          <div
+            class="modal fade bs-example-modal-lg-server"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <%- include('./modal-title.ejs') %> <strong>Add Server</strong> <%-
+            include('./modal-body.ejs') %>
+            <form
+              class="form-horizontal"
+              action="/server/post"
+              id="add-server"
+              method="POST"
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="mb-4">
+                    <label class="form-label" for="ip">IP</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="ip"
+                      name="ip"
+                      placeholder="Enter IP"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="port">Port</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="port"
+                      name="port"
+                      placeholder="Enter Port"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="machine">Select a Machine</label>
+                    <select name="machine" class="form-select" id="machine">
+                      <% machines.forEach(machine => { %>
+                      <option value="<%= machine.id %>">
+                        <%= machine.port %>, <%= machine.ip %>
+                      </option>
+                      <% });%>
+                    </select>
+                  </div>
+
+
+                  <div class="mb-4">
+                    <label class="form-label" for="user">Select a User</label>
+                    <select name="user" class="form-select" id="user">
+                      <% users.forEach(user => { %>
+                      <option value="<%= user.id %>">
+                        <%= user.first_name %> <%= user.last_name %>, <%=
+                        user.username %>
+                      </option>
+                      <% });%>
+                    </select>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="userpassword"
+                      >Password</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="userpassword"
+                      name="password"
+                      placeholder="Enter password"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="ram"
+                      >Enter RAM &#40;GB&#41;</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="ram"
+                      name="ram"
+                      placeholder="Enter RAM"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="hard-disk"
+                      >Enter Hard Disk</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="hard-disk"
+                      name="hard_disk"
+                      placeholder="Enter Hard Disk"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="cpu">Enter CPU</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="cpu"
+                      name="cpu"
+                      placeholder="Enter CPU"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="admin-password"
+                      >Admin Password</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="admin-password"
+                      name="admin_password"
+                      placeholder="Enter password"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="unique-id">Unique ID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="unique-id"
+                      name="unique_id"
+                      placeholder="Enter Unique ID"
+                    />
+                  </div>
+                  <div class="d-grid mt-4">
+                    <button
+                      class="btn btn-primary waves-effect waves-light"
+                      type="submit"
+                      name="action"
+                      value="add-server"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <%- include('./modal-end.ejs') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

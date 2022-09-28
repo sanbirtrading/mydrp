@@ -1,0 +1,129 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/css/admin-server-styles.css">
+<link rel="stylesheet" href="/css/top-bar-style.css">
+</head>
+<body>
+    <%- include('./includes/menu.ejs') %>
+    <%- include('./includes/is-manager.ejs') %>
+
+    <div class="main-content overflow-visible">
+        <div class="page-content">
+            <div class="container-fluid">
+                 <%#- include('./includes/tooltips.ejs') %>
+                <div class="py-2"></div>
+                <%- include('./includes/payment-history-table.ejs') %>
+                <br>
+                <div class="payment-tabs">
+                   <h3 class="text-center">Make Payments With</h3>
+                   <div class="d-flex justify-content-center">
+                       <div class="pointer mx-4">
+                        <a  
+                        data-bs-toggle="modal"
+                        data-bs-target=".bitcoin">
+                            <img src="/images/bitcoin.png" height="100" width="100">
+                            </a>
+                    </div>
+                    <div class="pointer mx-4">
+                        <a  
+                        data-bs-toggle="modal"
+                        data-bs-target=".tether">
+                            <img src="/images/tether.png" height="100" width="100">
+                            </a>
+                    </div>
+                    <div class="pointer mx-4">
+                        <a  
+                        data-bs-toggle="modal"
+                        data-bs-target=".ltc">
+                            <img src="/images/ltc.png" height="100" width="100">
+                            </a>
+                    </div>
+                    <div class="pointer mx-4">
+                        <a  
+                        data-bs-toggle="modal"
+                        data-bs-target=".eth">
+                            <img src="/images/eth.png" height="100" width="100">
+                            </a>
+                    </div>
+                    <div class="pointer mx-4">
+                        <a  
+                        data-bs-toggle="modal"
+                        data-bs-target=".busd">
+                            <img src="/images/busd.png" height="100" width="100">
+                            </a>
+                    </div>
+                   </div>
+                </div>
+
+                <div
+            class="modal fade bitcoin text-center"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <%- include('./includes/modal-title.ejs') %> <strong>Bitcoin Payment</strong> <%-
+            include('./includes/modal-body.ejs') %>
+            <img src="/images/bitcoin-qr.jpg" width="300" height="400">
+            <h4 class="my-2">17zv7Qxihh3csYdjZtuPqPn7Eru73yppXh</h4>
+            <%- include('./includes/modal-end.ejs') %>
+          
+            <div
+            class="modal fade tether text-center"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <%- include('./includes/modal-title.ejs') %> <strong>Tether Payment</strong> <%-
+            include('./includes/modal-body.ejs') %>
+            <img src="/images/tether-qr.jpg" width="300" height="400">
+            <h4 class="my-2">TJmGCpfatZzd9zLQ2n963R4DPc7f9Ldq5y</h4>
+            <%- include('./includes/modal-end.ejs') %>
+          
+            <div
+            class="modal fade ltc text-center"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <%- include('./includes/modal-title.ejs') %> <strong>Litecoin Payment</strong> <%-
+            include('./includes/modal-body.ejs') %>
+            <img src="/images/ltc-qr.jpg" width="300" height="400">
+            <h4 class="my-2">Ldp88vzhC7Cngoh69vKeuBSV32UhmUPiZV</h4>
+            <%- include('./includes/modal-end.ejs') %>
+        
+            <div
+            class="modal fade eth text-center"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <%- include('./includes/modal-title.ejs') %> <strong>Ethereum Payment</strong> <%-
+            include('./includes/modal-body.ejs') %>
+            <img src="/images/eth-qr.jpg" width="300" height="400">
+            <h4 class="my-2">0x52e0979099adb41b1808ffa4ef53e87cffd34091</h4>
+            <%- include('./includes/modal-end.ejs') %>
+                
+            <div
+            class="modal fade busd text-center"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <%- include('./includes/modal-title.ejs') %> <strong>BUSD Payment</strong> <%-
+            include('./includes/modal-body.ejs') %>
+            <img src="/images/busd-qr.jpg" width="300" height="400">
+            <h4 class="my-2"> 0x52e0979099adb41b1808ffa4ef53e87cffd34091</h4>
+            <%- include('./includes/modal-end.ejs') %>
+
+            </div>
+        </div>
+    </div>
+    <%- include('./includes/scripts.ejs') %>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/top-bar.js"></script>
+</body>
+<%- include('./includes/end.ejs') %>

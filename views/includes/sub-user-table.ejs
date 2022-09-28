@@ -1,0 +1,235 @@
+<%- include('./messages.ejs') %>
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="table-responsive overflow-hidden">
+      <h1>Users List</h1>
+
+      <table class="table table-striped mb-0">
+        <thead style="background-color: black; color: white">
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Server List</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach((user,count) => { %>
+          <tr class="pointer user-row">
+            <input class="id" type="hidden" value="<%- user.id %>" />
+            <input
+              class="first-name"
+              type="hidden"
+              value="<%= user.first_name %>"
+            />
+            <input
+              class="last-name"
+              type="hidden"
+              value="<%= user.last_name %>"
+            />
+            <% if (user.access_rights) { %>
+            <input
+              class="users"
+              type="hidden"
+              value="<%= JSON.parse(user.access_rights) %>"
+            />
+            <% } %>
+            <input
+              class="normal-users"
+              type="hidden"
+              value="<%= normalUsers %>"
+            />
+            <input class="email" type="hidden" value="<%- user.email %>" />
+            <th scope="row" class="id"><%= user.id %></th>
+            <td class="name"><%= user.first_name %> <%= user.last_name %></td>
+            <td class="access-rights">
+              <% if (user.parent_id) { %> <%
+              serverList[count].forEach(server => { %> 
+                <%=
+              server%> <% });%>
+            </td>
+            <% } %>
+            <td>
+              <div class="my-dropdown">
+                <i
+                  class="mdi mdi-dots-vertical dropbtn"
+                  type="button"
+                  id="dropdown-item"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  data-bs-boundary="viewport"
+                ></i>
+                <div class="dropdown-content">
+                  <a
+                    data-bs-target=".bs-example-modal-lg-user-details"
+                    data-bs-toggle="modal"
+                    href="#user-edit-modal"
+                    >Edit User
+                  </a>
+
+                  <a href="#">Disable</a>
+                  <form
+                    action="/user/sub-users/delete/<%- user.id %>"
+                    id="delete-sub-user"
+                    method="POST"
+                  >
+                    <button
+                      name="action"
+                      type="submit"
+                      formaction="/user/sub-users/delete/<%- user.id %>"
+                      value="delete-sub-user"
+                      class="button-link"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </td>
+            <% });%>
+          </tr>
+        </tbody>
+      </table>
+
+      <div
+        id="#user-edit-modal"
+        class="modal fade bs-example-modal-lg-user-details"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <%- include('./modal-title.ejs') %> <strong>Edit User</strong> <%-
+        include('./modal-body.ejs') %>
+        <div class="user-edit" id="user-edit"></div>
+        <%- include('./modal-end.ejs') %>
+      </div>
+
+      <!--  Modal content for the above example -->
+      <div
+        id="user-details-modal"
+        class="modal fade bs-example-modal-lg-user-details"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <%- include('./modal-title.ejs') %> <strong>User Details</strong> <%-
+        include('./modal-body.ejs') %>
+        <div class="user-details" id="user-details"></div>
+        <%- include('./modal-end.ejs') %> <%-
+        include('./modal-button-start.ejs')
+        %>data-bs-target=".bs-example-modal-lg-add-user"<%-
+        include('./modal-button-class.ejs') %> Add User %> <%-
+        include('./modal-button-end.ejs') %>
+
+        <!--  Modal content for the above example -->
+        <div
+          class="modal fade bs-example-modal-lg-add-user"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+        >
+          <%- include('./modal-title.ejs') %> <strong>Add User</strong> <%-
+          include('./modal-body.ejs') %>
+          <form
+            class="form-horizontal"
+            action="/user/sub-users"
+            id="add-user"
+            method="POST"
+          >
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-4">
+                  <label class="form-label" for="first_name">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="first_name"
+                    name="first_name"
+                    placeholder="Enter First Name"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="last_name">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="last_name"
+                    name="last_name"
+                    placeholder="Enter Last Name"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="username">Username</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    placeholder="Enter Username"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="email">Email</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter Email"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="server"
+                    >Select Server List</label
+                  >
+
+                  <% normalUsers.forEach(user => { %>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox1"
+                      name="server_list"
+                      value="<%= user.id %> <%= user.first_name %> <%= user.last_name %>"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox1"
+                      ><%= user.first_name %> <%= user.last_name %></label
+                    >
+                  </div>
+                  <% });%>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="userpassword">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="userpassword"
+                    name="password"
+                    placeholder="Enter password"
+                  />
+                </div>
+
+                <div class="d-grid mt-4">
+                  <button
+                    class="btn btn-primary waves-effect waves-light"
+                    type="submit"
+                    formaction="/user/sub-users"
+                    name="add-user"
+                    value="add-user"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <%- include('./modal-end.ejs') %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,218 @@
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="table-responsive overflow-hidden">
+      <h1>Client List</h1>
+      <table class="table table-striped mb-0">
+        <thead style="background-color: black; color: white">
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Number of Servers</th>
+            <th>Active Servers</th>
+            <th>Disabled Servers</th>
+            <th>Payment</th>
+            <% if (currentUser.is_admin) { %>
+            <th></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i=0; i < users.length; i++) {%>
+          <tr class="user-row">
+            <input class="id" type="hidden" value="<%- users[i].id %>" />
+            <input
+              class="first-name"
+              type="hidden"
+              value="<%- users[i].first_name %>"
+            />
+            <input
+              class="last-name"
+              type="hidden"
+              value="<%- users[i].last_name %>"
+            />
+            <input class="email" type="hidden" value="<%- users[i].email %>" />
+            <th scope="row"><%- users[i].id %></th>
+            <td><%- users[i].first_name %> <%- users[i].last_name %></td>
+            <td>
+              <% if(totalServersPerUser && totalServersPerUser.length > i) { %>
+              <%- totalServersPerUser[i].count_total_servers %><% } %>
+            </td>
+            <td>
+              <% if(totalActiveServersPerUser &&
+              totalActiveServersPerUser.length > i){ %><%-
+              totalActiveServersPerUser[i].count_active_servers %> <% } %>
+            </td>
+            <td>
+              <% if(totalDisabledServersPerUser &&
+              totalDisabledServersPerUser.length > i){ %>
+              <%-totalDisabledServersPerUser[i].count_disabled_servers %> <% }
+              %>
+            </td>
+            <td>50</td>
+            <% if (currentUser.is_admin) { %>
+            <td>
+              <div class="my-dropdown">
+                <i
+                  class="mdi mdi-dots-vertical dropbtn"
+                  type="button"
+                  id="dropdown-item"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  data-bs-boundary="viewport"
+                ></i>
+                <div class="dropdown-content">
+                  <a
+                    data-bs-target=".bs-example-modal-lg-user-details"
+                    data-bs-toggle="modal"
+                    href="#user-edit-modal"
+                    >Edit User
+                  </a>
+
+                  <a href="#">Disable</a>
+                  <form
+                    action="/user/delete-user/<%- users[i].id %>"
+                    id="delete-user"
+                    method="POST"
+                  >
+                   
+                    <button
+                      name="action"
+                      value="delete-user"
+                      class="button-link"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                  <% } %>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div
+        id="#user-edit-modal"
+        class="modal fade bs-example-modal-lg-user-details"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <%- include('./modal-title.ejs') %> <strong>Edit User</strong> <%-
+        include('./modal-body.ejs') %>
+        <div class="user-edit" id="user-edit"></div>
+        <%- include('./modal-end.ejs') %>
+
+        <div
+          id="user-details-modal"
+          class="modal fade bs-example-modal-lg-user-details"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+        >
+          <%- include('./modal-title.ejs') %> <strong>User Details</strong> <%-
+          include('./modal-body.ejs') %>
+          <div class="user-details" id="user-details"></div>
+          <%- include('./modal-end.ejs') %> <%-
+          include('./modal-button-start.ejs')
+          %>data-bs-target=".bs-example-modal-lg-add-user"<%-
+          include('./modal-button-class.ejs') %> Add User %> <%-
+          include('./modal-button-end.ejs') %>
+
+       
+          <div
+            class="modal fade bs-example-modal-lg-add-user"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <%- include('./modal-title.ejs') %> <strong>Add User</strong> <%-
+            include('./modal-body.ejs') %>
+            <form
+              class="form-horizontal"
+              action="/user/add-user"
+              id="add-user"
+              method="POST"
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="mb-4">
+                    <label class="form-label" for="first-name"
+                      >First Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="first-name"
+                      name="first_name"
+                      placeholder="Enter First Name"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="last-name">Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="last-name"
+                      name="last_name"
+                      placeholder="Enter Last Name"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="username">Username</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="username"
+                      placeholder="Enter Username"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="email">Email</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      placeholder="Enter Email"
+                    />
+                  </div>
+                  <div class="mb-4">
+  
+                  <div class="mb-4">
+                    <label class="form-label" for="userpassword"
+                      >Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="userpassword"
+                      name="password"
+                      placeholder="Enter password"
+                    />
+                  </div>
+
+                  <div class="d-grid mt-4">
+                    <button
+                      class="btn btn-primary waves-effect waves-light"
+                      type="submit"
+                      formaction="/user/add-user"
+                      name="add-user"
+                      value="add-user"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <%- include('./modal-end.ejs') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<header id="page-topbar">
+  <div class="d-flex align-items-center justify-content-between">
+    <nav id="mainMenu" class="navbar navbar-light navbar-expand-lg topnav-menu">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#topnav-menu-content"
+        aria-controls="topnav-menu-content"
+        aria-expanded="false"
+        aria-label="Toggle Navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- LOGO -->
+      <div class="navbar-brand-box bg-white text-center">
+        <a href="index.html" class="logo logo-dark">
+          <span class="logo-sm">
+            <img src="/images/myrdp.png" alt="logo-sm-dark" height="50" />
+          </span>
+          <span class="logo-lg">
+            <img src="/images/myrdp.png" alt="logo-dark" height="50" />
+          </span>
+        </a>
+
+        <a href="index.html" class="logo logo-light">
+          <span class="logo-sm">
+            <img src="/images/myrdp.png" alt="logo-sm-light" height="50" />
+          </span>
+          <span class="logo-lg">
+            <img src="/images/myrdp.png" alt="logo-light" height="50" />
+          </span>
+        </a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="topnav-menu-content">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="mdi mdi-home-variant-outline me-2"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="mdi mdi-information-outline me-2"></i> About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact-us">
+              <i class="mdi mdi-account-box-outline me-2"></i> Contact
+            </a>
+          </li>
+          <li class="nav-item d-md-block d-lg-none">
+            <a class="nav-link" href="/auth/signup">
+              <i class="mdi mdi-account-plus me-2"></i> Sign Up
+            </a>
+          </li>
+          <li class="nav-item d-md-block d-lg-none">
+            <a class="nav-link" href="/auth/login">
+              <i class="mdi mdi-login me-2"></i> Sign In
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="button-container d-lg-block d-none mx-4">
+      <a
+        href="/auth/signup"
+        class="btn btn-primary btn-lg waves-effect waves-light"
+        style="margin-right: 5px"
+        >Sign up</a
+      >
+      <a
+        href="/auth/login"
+        class="btn btn-primary btn-lg waves-effect waves-light"
+        >Login</a
+      >
+    </div>
+  </div>
+</header>
